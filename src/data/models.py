@@ -16,6 +16,7 @@ class DataBatch(models.Model):
 
     class Meta:
         unique_together = (('user', 'uuid'),)
+        ordering = ('received_at',)
 
     @classmethod
     def receive(cls, user, data):
@@ -38,5 +39,12 @@ class DataBatch(models.Model):
                 ),
                 ContentFile(json.dumps(data)))
             print(obj.content.path)
-                
-                
+
+
+    def events(self):
+        import json
+        with self.content.open() as f:
+            d = json.load(f)
+        act = d['activity'] + d['position']
+        act.sort(key=lambda x: x['date'])
+        return act

@@ -25,7 +25,10 @@ SECRET_KEY = 'nd=pdm&uk#=5vvk2i=gzxfzqr%xr^gd!6!=5k0he*jeu(*t@&i'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+
+STATIC_ROOT = '/home/ubuntu/softbike/var/static/'
+MEDIA_ROOT = '/home/ubuntu/softbike/var/media/'
 
 
 # Application definition
@@ -40,8 +43,12 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'oauth2_provider',
+    'drf_yasg',
 
+    'bikes',
     'data',
+    'deliveries',
+    'trips',
 ]
 
 MIDDLEWARE = [
@@ -59,7 +66,9 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'core/templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -128,8 +137,15 @@ STATIC_URL = '/static/'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+        'rest_framework.authentication.SessionAuthentication',
     ],
     'DEFAULT_PARSER_CLASSES': [
         'rest_framework.parsers.JSONParser',
     ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
 }
+
+LOGOUT_URL = '/accounts/logout/'
+LOGIN_REDIRECT_URL = '/swagger/'

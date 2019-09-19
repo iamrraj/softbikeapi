@@ -1,0 +1,91 @@
+<!doctype html>
+<head>
+		<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+			<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+			 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+			      integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+	    crossorigin=""/>
+			   <!-- Make sure you put this AFTER Leaflet's CSS -->
+			    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+	          integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+	      crossorigin=""></script>
+
+			    <script
+       			  src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+	    			  integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+	  			  crossorigin="anonymous"></script>
+
+
+<style>
+.has-pos {
+		background: #dfd;
+}
+</style>
+</head>
+<body>
+		<div class="row">
+					<div class="col-md-6">
+
+						<h1>{{ user }}</h1>
+
+							<table class='table'>
+
+{% for b in user.databatch_set.all %}
+{% for e in b.events %}
+<tr{% if 'latitude' in e %}
+	  data-loc-y="{{ e.latitude }}"
+   	  data-loc-x="{{ e.longitude }}"
+	  {% endif %}
+	>
+	<td>{{ e.date }}</td>
+	<td>
+		<table>
+	{% for x in e.items %}
+
+		{% if x.0 != 'date' %}
+		<tr><td>{{ x.0 }}:</td><td> {{ x.1 }}</td></tr>
+		{% endif %}
+		{% endfor %}
+		</table></td>
+</tr>
+{% endfor %}
+{% endfor %}
+							</table>
+					</div>
+
+		<div id="map" style="position: fixed; top:0; right: 0; height: 100%; width: 50%"></div>
+
+		</div>
+
+	<script>
+
+var mymap = L.map('map').setView([51.505, -0.09], 13);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mymap);
+
+var shape = [
+{% for b in user.databatch_set.all %}
+{% for e in b.events %}
+{% if 'latitude' in e %}
+[{{ e.latitude }}, {{ e.longitude }}],
+{% endif %}
+{% endfor %}
+{% endfor %}
+];
+
+	var poly = L.polyline(shape, {color: 'red'});
+	poly.addTo(mymap);
+	mymap.fitBounds(poly.getBounds());
+
+
+	$('tr').click(function() {
+		     mymap.panTo([
+				             $(this).attr('data-loc-y'),
+					             $(this).attr('data-loc-x')
+						          ]);
+	})
+
+	</script>
+
+</body>
+</html>
