@@ -41,14 +41,25 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+
     'rest_framework',
     'oauth2_provider',
     'drf_yasg',
+    'rest_framework_swagger',
+    'django_filters',
+
 
     'bikes',
     'data',
     'deliveries',
     'trips',
+    'walk',
+    'clasic',
+    'electric',
+    'user',
+    'dashboard',
+    'core',
+
 ]
 
 MIDDLEWARE = [
@@ -82,6 +93,12 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'core.wsgi.application'
+
+CORS_ORIGIN_ALLOW_ALL = False
+
+CORS_ORIGIN_WHITELIST = (
+    'https://localhost:3000',
+)
 
 
 # Database
