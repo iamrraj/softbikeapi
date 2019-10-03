@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'bikes',
     'data',
     'deliveries',
+    'push',
     'trips',
     'walk',
     'clasic',
@@ -129,6 +130,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+AUTH_PASSWORD_VALIDATORS = []
 
 
 # Internationalization

@@ -10,7 +10,10 @@ class DaysSerializer(serializers.Serializer):
 
 
 class DaySerializer(serializers.Serializer):
-    mileage = serializers.FloatField(help_text='Mileage in km')
+    mileage = serializers.FloatField(help_text='Total mileage in km')
+    electricBikeMileage = serializers.FloatField(help_text='Electric bike mileage in km')
+    weight = serializers.FloatField(help_text='Total weight in kg')
+
     time = serializers.IntegerField(help_text='Total work time, in seconds')
     bikeTime = serializers.IntegerField(help_text='Total bike time, in seconds')
     footTime = serializers.IntegerField(help_text='Total on foot time, in seconds')

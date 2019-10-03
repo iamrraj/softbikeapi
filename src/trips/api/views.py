@@ -3,6 +3,7 @@ from rest_framework.views import APIView
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from . import serializers
+from ..models import WorkDay
 
 
 class MeView(APIView):
@@ -22,11 +23,9 @@ class DaysView(APIView):
         return Response({
             "days": [
                 {
-                    "date": "2019-09-15",
-                },
-                {
-                    "date": "2019-09-16",
-                },
+                    "date": obj.date.isoformat(),
+                }
+                for obj in request.user.workday_set.order_by('date')
             ]})
 
 
@@ -36,11 +35,14 @@ class DayView(APIView):
             manual_parameters=[openapi.Parameter('date', 'path', description='Date in ISO format', type='string', format='date')]
         )
     def get(self, request, date):
+        day = request.user.workday_set.get(date=date)
         return Response({
-            "mileage": 1234.56,
-            "time": 123456,
-            "bikeTime": 123000,
-            "footTime": 456,
-            "co2": 234,
+            "mileage":day.mileage,
+            "electricBikeMileage": day.electric_bike_mileage,
+            "weight": day.weight,
+            "time": day.time,
+            "bikeTime": int(day.bike_time),
+            "footTime": int(day.foot_time),
+            "co2": int(day.co2),
         })
 
