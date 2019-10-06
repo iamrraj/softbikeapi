@@ -43,12 +43,16 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'oauth2_provider',
+    'rest_framework_swagger',
+    'django_filters',
     'drf_yasg',
 
     'bikes',
     'data',
     'deliveries',
     'trips',
+    'clasic',
+    'walk'
 ]
 
 MIDDLEWARE = [
@@ -148,4 +152,4 @@ REST_FRAMEWORK = {
 }
 
 LOGOUT_URL = '/accounts/logout/'
-LOGIN_REDIRECT_URL = '/swagger/'
+LOGIN_REDIRECT_URL = '/'
