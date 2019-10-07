@@ -3,7 +3,11 @@ from . import views
 
 
 urlpatterns = [
+    # App expects it here.
+    path('', views.DeliveriesView.as_view()),
+    # Dashboard expects it here.
     path('data/', views.DeliveriesView.as_view()),
+
     path('data/<int:pk>/', views.DDeliveriesView.as_view()),
 
     path('postman/', views.Postman.as_view()),
