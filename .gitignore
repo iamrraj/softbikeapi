@@ -1,3 +1,6 @@
 *.pyc
 *~
 *.sqlite3
+
+/src/core/localsettings.py
+/media

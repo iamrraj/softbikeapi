@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from . import defaults as E
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -27,8 +29,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-STATIC_ROOT = '/home/ubuntu/softbike/var/static/'
-MEDIA_ROOT = '/home/ubuntu/softbike/var/media/'
+STATIC_ROOT = E.STATIC_ROOT
+MEDIA_ROOT = E.MEDIA_ROOT
 
 
 # Application definition

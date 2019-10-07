@@ -8,6 +8,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('deliveries', '0003_auto_20190919_1023'),
+        ('electric', '0001_initial'),
     ]
 
     operations = [

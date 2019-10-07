@@ -21,7 +21,6 @@ class DataBatch(models.Model):
     @classmethod
     def receive(cls, user, data):
         uuid = read_uuid(data)
-        print(user, uuid)
         try:
             obj = cls.objects.create(
                 user=user,
@@ -38,7 +37,6 @@ class DataBatch(models.Model):
                     uuid
                 ),
                 ContentFile(json.dumps(data)))
-            print(obj.content.path)
 
 
     def events(self):
