@@ -34,9 +34,9 @@ class EndpointsTest(TestCase):
     def test_bikes_electric(self):
         ElectricBike.objects.create(id=1, label='Label')
         response = self.client.get('/api/1/bikes/electric/', **self.A)
-        self.assertEqual(response.json(), [
-                {"id": 1, "label": "Label"}
-            ])
+        data = response.json()
+        self.assertEqual(data[0]['id'], 1)
+        self.assertEqual(data[0]['label'], 'Label')
 
     def test_data(self):
         self.client.post(
@@ -84,6 +84,7 @@ class EndpointsTest(TestCase):
             content_type='application/json',
             **self.A
             )
+        self.assertEqual(response.status_code, 200)
         self.assertTrue(Delivery.objects.all().exists())
 
     def test_me(self):

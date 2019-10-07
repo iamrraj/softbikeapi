@@ -22,15 +22,13 @@ from rest_framework_swagger.views import get_swagger_view
 from drf_yasg import openapi
 
 
-schema_view_1 = get_swagger_view(title='SOFT BIKE API')
-
 schema_view = get_schema_view(
-   openapi.Info(
-      title="SoftBike API",
-      default_version='v1',
-   ),
-   public=True,
-   permission_classes=(permissions.AllowAny,),
+    openapi.Info(
+        title="SoftBike API",
+        default_version='v1',
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
 )
 
 
@@ -43,21 +41,20 @@ urlpatterns = [
     path('api/1/oauth/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     path('api/1/bikes/', include('bikes.api.urls')),
     path('api/1/data/', include('data.api.urls')),
+
     path('api/1/deliveries/', include('deliveries.api.urls')),
+
     path('api/1/push/', include('push.api.urls')),
+
+    path('api/1/walk/', include('walk.api.urls')),
+    path('api/1/classic/', include('clasic.api.urls')),
+
     path('api/1/', include('trips.api.urls')),
 
-    path('token-auth/', obtain_jwt_token),
-    path('core/', include('coree.urls')),
-
-    path('api/1/ebikes/', include('electric.urls')),
-    path('api/1/cbikes/', include('clasic.urls')),
-    path('api/1/user/', include('user.urls')),
-    path('api/1/walk/', include('walk.urls')),
-    path('dapi/1/dashboard/', include('dashboard.urls')),
-    url(r'^$', schema_view_1),
-
-    url(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
-    url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    url(r'^swagger(?P<format>\.json|\.yaml)$',
+        schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    url(r'^swagger/$', schema_view.with_ui('swagger',
+                                           cache_timeout=0), name='schema-swagger-ui'),
+    url(r'^redoc/$', schema_view.with_ui('redoc',
+                                         cache_timeout=0), name='schema-redoc'),
 ]
