@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .. import models
-from deliveries.models import Delivery, User
+from deliveries.models import Delivery
 from deliveries.api.serializers import DeliverySerializer
 from django.db.models import Sum, Avg, Max, Min, Count, F, Q
 from django.db.models import Func

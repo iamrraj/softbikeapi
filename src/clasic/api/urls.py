@@ -4,10 +4,10 @@ from . import views
 
 urlpatterns = [
 
-    path('classic/', views.Classs.as_view()),
-    path('classic/<int:pk>/', views.DClasss.as_view()),
+    path('', views.Classs.as_view()),
+    path('<int:pk>/', views.DClasss.as_view()),
 
-    path('classic/summery', views.ClassicSummery.as_view()),
+    path('summery/', views.ClassicSummery.as_view()),
 
 
 

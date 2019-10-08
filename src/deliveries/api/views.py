@@ -102,26 +102,8 @@ class Dashboard1(generics.ListCreateAPIView):
         return qs
 
 
-# class CustomPagination(PageNumberPagination):
-#     def get_paginated_response(self, data):
-#         return Response({
-#             'next': self.get_next_link(),
-#             'previous': self.get_previous_link(),
-#             'count': self.page.paginator.count,
-
-#             'total_milage': Delivery.objects.filter().aggregate(total_milage=Sum('milage')),
-#             'total_co2': Delivery.objects.aggregate(total_co2=Sum('co2')),
-#             'total_box': Delivery.objects.aggregate(total_box=Sum('additionalbox')),
-#             'total_average': Delivery.objects.aggregate(total_average=Avg('averagespeed')),
-#             'total_user': Delivery.objects.aggregate(total_user=sum('nouser')),
-#             'total_time': Delivery.objects.aggregate(total_time=Sum('movingtime')),
-#             'results': data,
-
-#         })
-
-
 class ReportView(generics.ListCreateAPIView):
-    queryset = Delivery.objects.all().order_by('-user').distinct()
+    queryset = Delivery.objects.all().distinct()
     serializer_class = serializers.ReportSerializer
     # pagination_class = CustomPagination
     filter_backends = [DjangoFilterBackend]

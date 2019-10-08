@@ -11,12 +11,12 @@ from django_filters.rest_framework import DjangoFilterBackend
 class Classs(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = serializers.ClassSerializer
-    filter_backends = [DjangoFilterBackend]
-    filter_fields = {
-        'too': ['lte'],
-        'fromm': ['gte'],
+    # filter_backends = [DjangoFilterBackend]
+    # filter_fields = {
+    #     'too': ['lte'],
+    #     'fromm': ['gte'],
 
-    }
+    # }
 
 # This Class Is only Specified for Classic Bike
 
@@ -24,12 +24,12 @@ class Classs(generics.ListCreateAPIView):
 class DClasss(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = serializers.DetailClassSerializer
-    filter_backends = [DjangoFilterBackend]
-    filter_fields = {
-        'too': ['lte'],
-        'fromm': ['gte'],
+    # filter_backends = [DjangoFilterBackend]
+    # filter_fields = {
+    #     'too': ['lte'],
+    #     'fromm': ['gte'],
 
-    }
+    # }
 
 
 class ClassicSummery(generics.ListCreateAPIView):
