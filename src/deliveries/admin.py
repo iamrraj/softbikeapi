@@ -3,4 +3,4 @@ from . import models
 
 
 admin.site.register(models.Delivery)
-admin.site.register(models.User)
+# admin.site.register(models.User)

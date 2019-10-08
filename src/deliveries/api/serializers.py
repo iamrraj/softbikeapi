@@ -12,6 +12,16 @@ class Round(Func):
     function = 'ROUND'
     template = '%(function)s(%(expressions)s, 2)'
 
+
+class TestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Delivery
+        fields=['addresses','letters_number','letters_weight','packages_number','packaged_weight']
+
+    def create(self, validated_data):
+        validated_data['user'] = self.context['request'].user
+        return super().create(validated_data)
+
 class DeliverySerializer(serializers.ModelSerializer):
     # user = serializers.Field(source='user.username')
 
@@ -163,11 +173,11 @@ class PostmanSerializer(serializers.ModelSerializer):
     total_ship=serializers.SerializerMethodField()
     total_letter=serializers.SerializerMethodField()
     total_package=serializers.SerializerMethodField()
-    user = serializers.SerializerMethodField()
+    # user = serializers.SerializerMethodField()
     
 
-    def get_user(self, obj):
-        return obj.user.username
+    # def get_user(self, obj):
+    #     return obj.user.username
 
     class Meta:
         model = User
@@ -181,78 +191,78 @@ class PostmanSerializer(serializers.ModelSerializer):
 
     def get_total_letter(self, obj):
         totalpieces = Delivery.objects.filter(
-            user_id=obj.user.id).aggregate(total_milage=Sum('letteritems'))
+            user_id=obj.id).aggregate(total_milage=Sum('letteritems'))
         return totalpieces["total_milage"]
 
     def get_total_package(self, obj):
         totalpieces = Delivery.objects.filter(
-            user_id=obj.user.id).aggregate(total_package=Sum('package'))
+            user_id=obj.id).aggregate(total_package=Sum('package'))
         return totalpieces["total_package"]
 
     def get_total_ship(self, obj):
         totalpieces = Delivery.objects.filter(
-            user_id=obj.user.id).aggregate(total_ship=Sum('shipweight'))
+            user_id=obj.id).aggregate(total_ship=Sum('shipweight'))
         return totalpieces["total_ship"]
 
     def get_total_milage(self, obj):
         totalpieces = Delivery.objects.filter(
-            user_id=obj.user.id).aggregate(total_milage=Sum('milage'))
+            user_id=obj.id).aggregate(total_milage=Sum('milage'))
         return totalpieces["total_milage"]
 
     def get_total_milage(self, obj):
         totalpieces = Delivery.objects.filter(
-            user_id=obj.user.id).aggregate(total_milage=Sum('milage'))
+            user_id=obj.id).aggregate(total_milage=Sum('milage'))
         return totalpieces["total_milage"]
 
     def get_total_kg(self, obj):
         totalpieces = Delivery.objects.filter(
-            user_id=obj.user.id).aggregate(total_kg=Sum('kgtrasported'))
+            user_id=obj.id).aggregate(total_kg=Sum('kgtrasported'))
         return totalpieces["total_kg"]
 
     def get_total_co2(self, obj):
         totalpieces = Delivery.objects.filter(
-            user_id=obj.user.id).aggregate(total_co2=Sum('co2'))
+            user_id=obj.id).aggregate(total_co2=Sum('co2'))
         return totalpieces["total_co2"]
 
     def get_total_boxes(self, obj):
-        totalpieces=Delivery.objects.filter(user_id=obj.user.id).aggregate(
+        totalpieces=Delivery.objects.filter(user_id=obj.id).aggregate(
             total_boxes=Sum('additionalbox'))
         return totalpieces["total_boxes"]
 
     def get_total_movingtime(self, obj):
-        totalpieces=Delivery.objects.filter(user_id=obj.user.id).aggregate(
+        totalpieces=Delivery.objects.filter(user_id=obj.id).aggregate(
             total_movingtime=Sum('movingtime'))
         return totalpieces["total_movingtime"]
 
 # Its For Specific Kg Milage
     def get_total_walk_milage(self, obj):
         totalpieces = Delivery.objects.filter(
-            user_id=obj.user.id, mode="foot").aggregate(total_walk_milage=Sum('milage'))
+            user_id=obj.id, mode="foot").aggregate(total_walk_milage=Sum('milage'))
         return totalpieces["total_walk_milage"]
 
     def get_total_electric_milage(self, obj):
         totalpieces = Delivery.objects.filter(
-            user_id=obj.user.id, mode="electric-bike").aggregate(total_electric_milage=Sum('milage'))
+            user_id=obj.id, mode="electric-bike").aggregate(total_electric_milage=Sum('milage'))
         return totalpieces["total_electric_milage"]
 
     def get_total_classic_milage(self, obj):
         totalpieces = Delivery.objects.filter(
-            user_id=obj.user.id, mode="bike").aggregate(total_classic_milage=Sum('milage'))
+            user_id=obj.id, mode="bike").aggregate(total_classic_milage=Sum('milage'))
         return totalpieces["total_classic_milage"]
 
 # Its For Specific Kg Transpotead
     def get_total_walk_kg(self, obj):
-        totalpieces = Delivery.objects.filter(user_id=obj.user.id, mode="foot").aggregate(
+        totalpieces = Delivery.objects.filter(user_id=obj.id, mode="foot").aggregate(
             get_total_walk_kg=Sum('kgtrasported'))
         return totalpieces["get_total_walk_kg"]
 
     def get_total_electric_kg(self, obj):
         totalpieces = Delivery.objects.filter(
-            user_id=obj.user.id, mode="electric-bike").aggregate(total_electric_kg=Sum('kgtrasported'))
+            user_id=obj.id, mode="electric-bike").aggregate(total_electric_kg=Sum('kgtrasported'))
         return totalpieces["total_electric_kg"]
 
     def get_total_classic_kg(self, obj):
-        totalpieces = Delivery.objects.filter(user_id=obj.user.id, mode="bike").aggregate(
+        totalpieces = Delivery.objects.filter(user_id=obj.id, mode="bike").aggregate(
             total_classic_kg=Sum('kgtrasported'))
         return totalpieces["total_classic_kg"]
 
@@ -261,10 +271,10 @@ class DUserSerializer(serializers.ModelSerializer):
     # detail = DeliverySerializer(many=True, read_only=True)
     results = serializers.SerializerMethodField()
     summery = PostmanSerializer(source="*")
-    user = serializers.SerializerMethodField()
+    # user = serializers.SerializerMethodField()
 
-    def get_user(self, obj):
-        return obj.user.username
+    # def get_user(self, obj):
+    #     return obj.user.username
 
     class Meta:
         model = User

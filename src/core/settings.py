@@ -160,6 +160,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
+    'DATETIME_FORMAT': "%Y-%m-%d",
 }
 
 LOGOUT_URL = '/accounts/logout/'

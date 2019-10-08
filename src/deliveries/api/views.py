@@ -8,6 +8,12 @@ from django_filters.rest_framework import DjangoFilterBackend
 from django.db.models import Sum, Avg
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
+from django.contrib.auth.models import User
+
+
+class Test(generics.ListCreateAPIView):
+    queryset = Delivery.objects.all()
+    serializer_class = serializers.TestSerializer
 
 
 class DeliveriesView(generics.ListCreateAPIView):
@@ -41,22 +47,22 @@ class DDeliveriesView(generics.RetrieveUpdateDestroyAPIView):
 class Postman(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = serializers.PostmanSerializer
-    filter_backends = [DjangoFilterBackend]
-    filter_fields = {
-        'too': ['lte'],
-        'fromm': ['gte'],
+    # filter_backends = [DjangoFilterBackend]
+    # filter_fields = {
+    #     'too': ['lte'],
+    #     'fromm': ['gte'],
 
-    }
+    # }
 
 
 class DPostman(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = serializers.DUserSerializer
     filter_backends = [DjangoFilterBackend]
-    filter_fields = {
-        'too': ['lte'],
-        'fromm': ['gte'],
-    }
+    # filter_fields = {
+    #     'too': ['lte'],
+    #     'fromm': ['gte'],
+    # }
 
 
 class Userr1(generics.ListCreateAPIView):

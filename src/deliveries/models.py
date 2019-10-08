@@ -2,18 +2,19 @@ from django.db import models
 from django.conf import settings
 from bikes.models import ElectricBike
 from datetime import datetime
+from django.contrib.auth.models import User
 
 
-class User(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE)
-    too = models.DateField(default=datetime.now)
-    fromm = models.DateField(default=datetime.now)
+# class User(models.Model):
+#     user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE)
+#     too = models.DateField(default=datetime.now)
+#     fromm = models.DateField(default=datetime.now)
 
-    class Meta:
-        ordering = ('user',)
+#     class Meta:
+#         ordering = ('user',)
 
-    def __str__(self):
-        return str(self.user)
+#     def __str__(self):
+#         return str(self.user)
 
 
 class Delivery(models.Model):

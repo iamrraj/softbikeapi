@@ -20,5 +20,7 @@ urlpatterns = [
     path('report/', views.ReportView.as_view()),
     path('user1/', views.Userr1.as_view()),
 
+    path('test/', views.Test.as_view())
+
 
 ]

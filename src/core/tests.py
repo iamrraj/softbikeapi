@@ -77,7 +77,7 @@ class EndpointsTest(TestCase):
         })
 
     def test_deliveries(self):
-        response = self.client.post('/api/1/deliveries/',
+        response = self.client.post('/api/1/deliveries/test/',
                                     {
                                         # "user":1,
                                         "addresses": 1,
@@ -90,7 +90,7 @@ class EndpointsTest(TestCase):
                                     **self.A
                                     )
         print(response.content)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 201)
         self.assertTrue(Delivery.objects.all().exists())
 
     def test_me(self):
