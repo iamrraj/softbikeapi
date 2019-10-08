@@ -39,6 +39,16 @@ class Delivery(models.Model):
         help_text="Additional Boxes will be in Number ", default=10)
     nouser = models.IntegerField(
         help_text="No Of User will be in integer", default=10)
+    addresses = models.IntegerField(
+        help_text="No Of address", default=1)
+    letters_number = models.IntegerField(
+        help_text="No Of address", default=1)
+    letters_weight = models.FloatField(
+        help_text="Kg Transported will be in Kg", default=10)
+    packages_number = models.IntegerField(
+        help_text="No Of address", default=1)
+    packaged_weight = models.FloatField(
+        help_text="Kg Transported will be in Kg", default=10)
     mode = models.CharField(max_length=64, null=True, blank=True, choices=[(
         'foot', 'foot'), ('bike', 'bike'), ('electric-bike', 'electric-bike')], help_text='Mode of transport')
     electric_bike = models.ForeignKey(
