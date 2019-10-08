@@ -51,6 +51,10 @@ urlpatterns = [
 
     path('api/1/', include('trips.api.urls')),
 
+
+    path('token-auth/', obtain_jwt_token),
+    path('core/', include('login.urls')),
+
     url(r'^swagger(?P<format>\.json|\.yaml)$',
         schema_view.without_ui(cache_timeout=0), name='schema-json'),
     url(r'^swagger/$', schema_view.with_ui('swagger',

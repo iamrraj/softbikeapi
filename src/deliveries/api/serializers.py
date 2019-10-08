@@ -150,11 +150,11 @@ class UserSerializer1(serializers.ModelSerializer):
     user1 = serializers.SerializerMethodField()
 
     def get_user1(self, obj):
-        return obj.user.username
+        return obj.username
 
     class Meta:
         model = User
-        fields = ['user1','user']
+        fields = ['user1','username']
 
     
 
