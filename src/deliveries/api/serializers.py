@@ -154,7 +154,7 @@ class UserSerializer1(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['user1','username']
+        fields = ['user1','pk']
 
     
 
@@ -191,38 +191,32 @@ class PostmanSerializer(serializers.ModelSerializer):
 
     def get_total_letter(self, obj):
         totalpieces = Delivery.objects.filter(
-            user_id=obj.id).aggregate(total_milage=Sum('letteritems'))
+            user_id=obj.id).aggregate(total_milage=Sum('letters_number'))
         return totalpieces["total_milage"]
 
     def get_total_package(self, obj):
         totalpieces = Delivery.objects.filter(
-            user_id=obj.id).aggregate(total_package=Sum('package'))
+            user_id=obj.id).aggregate(total_package=Sum('packages_number'))
         return totalpieces["total_package"]
 
     def get_total_ship(self, obj):
         totalpieces = Delivery.objects.filter(
-            user_id=obj.id).aggregate(total_ship=Sum('shipweight'))
+            user_id=obj.id).aggregate(total_ship=Sum('packaged_weight'))
         return totalpieces["total_ship"]
 
-    def get_total_milage(self, obj):
-        totalpieces = Delivery.objects.filter(
-            user_id=obj.id).aggregate(total_milage=Sum('milage'))
-        return totalpieces["total_milage"]
 
     def get_total_milage(self, obj):
         totalpieces = Delivery.objects.filter(
             user_id=obj.id).aggregate(total_milage=Sum('milage'))
         return totalpieces["total_milage"]
 
+    
     def get_total_kg(self, obj):
         totalpieces = Delivery.objects.filter(
             user_id=obj.id).aggregate(total_kg=Sum('kgtrasported'))
         return totalpieces["total_kg"]
 
-    def get_total_co2(self, obj):
-        totalpieces = Delivery.objects.filter(
-            user_id=obj.id).aggregate(total_co2=Sum('co2'))
-        return totalpieces["total_co2"]
+    
 
     def get_total_boxes(self, obj):
         totalpieces=Delivery.objects.filter(user_id=obj.id).aggregate(
@@ -247,7 +241,7 @@ class PostmanSerializer(serializers.ModelSerializer):
 
     def get_total_classic_milage(self, obj):
         totalpieces = Delivery.objects.filter(
-            user_id=obj.id, mode="bike").aggregate(total_classic_milage=Sum('milage'))
+        user_id=obj.id, mode="bike").aggregate(total_classic_milage=Sum('milage'))
         return totalpieces["total_classic_milage"]
 
 # Its For Specific Kg Transpotead
@@ -319,43 +313,43 @@ class ReportSerializer(serializers.ModelSerializer):
     #     return obj.user.username
         
     def get_total_letter(self, obj):
-        totalpieces = Delivery.objects.filter(user_id=obj.id,mode=obj.mode).aggregate(
-            total_letter=Sum('letteritems'))
+        totalpieces = Delivery.objects.filter(user_id=obj.user.id,mode=obj.mode).aggregate(
+            total_letter=Sum('letters_number'))
         return totalpieces["total_letter"]
 
     def get_total_ship_weight(self, obj):
-        totalpieces = Delivery.objects.filter(user_id=obj.id,mode=obj.mode).aggregate(
-            total_ship_weight=Sum('shipweight'))
+        totalpieces = Delivery.objects.filter(user_id=obj.user.id,mode=obj.mode).aggregate(
+            total_ship_weight=Round(Sum('packaged_weight')))
         return totalpieces["total_ship_weight"]
 
     def get_total_pack(self, obj):
-        totalpieces = Delivery.objects.filter(user_id=obj.id,mode=obj.mode).aggregate(total_pack=Sum('package'))
+        totalpieces = Delivery.objects.filter(user_id=obj.user.id,mode=obj.mode).aggregate(total_pack=Sum('packages_number'))
         return totalpieces["total_pack"]
 
     def get_total_milage(self, obj):
-        totalpieces = Delivery.objects.filter(user_id=obj.id,mode=obj.mode).aggregate(total_milage=Sum('milage'))
+        totalpieces = Delivery.objects.filter(user_id=obj.user.id,mode=obj.mode).aggregate(total_milage=Sum('milage'))
         return totalpieces["total_milage"]
 
     def get_total_movingtime(self, obj):
-        totalpieces = Delivery.objects.filter(user_id=obj.id,mode=obj.mode).aggregate(
+        totalpieces = Delivery.objects.filter(user_id=obj.user.id,mode=obj.mode).aggregate(
             total_movingtime=Sum('movingtime'))
         return totalpieces["total_movingtime"]
 
     def get_total_averagespeed(self, obj):
-        totalpieces = Delivery.objects.filter(user_id=obj.id,mode=obj.mode).aggregate(
+        totalpieces = Delivery.objects.filter(user_id=obj.user.id,mode=obj.mode).aggregate(
             total_averagespeed=Round(Avg('averagespeed')))
         return totalpieces["total_averagespeed"]
 
     def get_total_kg(self, obj):
-        totalpieces = Delivery.objects.filter(user_id=obj.id,mode=obj.mode).aggregate(total_kg=Sum('kgtrasported'))
+        totalpieces = Delivery.objects.filter(user_id=obj.user.id,mode=obj.mode).aggregate(total_kg=Sum('kgtrasported'))
         return totalpieces["total_kg"]
 
     def get_total_co2_save(self, obj):
-        totalpieces = Delivery.objects.filter(user_id=obj.id,mode=obj.mode).aggregate(total_co2_save=Sum('co2'))
+        totalpieces = Delivery.objects.filter(user_id=obj.user.id,mode=obj.mode).aggregate(total_co2_save=Sum('co2'))
         return totalpieces["total_co2_save"]
 
     def get_total_boxes(self, obj):
-        totalpieces = Delivery.objects.filter(user_id=obj.id,mode=obj.mode).aggregate(total_boxes=Sum('additionalbox'))
+        totalpieces = Delivery.objects.filter(user_id=obj.user.id,mode=obj.mode).aggregate(total_boxes=Sum('additionalbox'))
         return totalpieces["total_boxes"]
 
     def get_total_user(self, obj):

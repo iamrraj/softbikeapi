@@ -1,0 +1,1 @@
+web: gunicorn softapi.wsgi --log-file -

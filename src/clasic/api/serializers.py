@@ -41,18 +41,18 @@ class ClassSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
     def get_total_letter(self, obj):
-        totalpieces = Delivery.objects.filter(user_id=obj.id, mode__exact="bike").aggregate(
-            total_letter=Sum('letteritems'))
+        totalpieces = Delivery.objects.filter(user_id=obj.id, mode="bike").aggregate(
+            total_letter=Sum('letters_number'))
         return totalpieces["total_letter"]
 
     def get_total_ship_weight(self, obj):
-        totalpieces = Delivery.objects.filter(user_id=obj.id, mode__exact="bike").aggregate(
-            total_ship_weight=Sum('shipweight'))
+        totalpieces = Delivery.objects.filter(user_id=obj.id, mode="bike").aggregate(
+            total_ship_weight=Round(Sum('packaged_weight')))
         return totalpieces["total_ship_weight"]
 
     def get_total_pack(self, obj):
         totalpieces = Delivery.objects.filter(
-            user_id=obj.id, mode__exact="bike").aggregate(total_pack=Sum('package'))
+            user_id=obj.id, mode="bike").aggregate(total_pack=Sum('packages_number'))
         return totalpieces["total_pack"]
 
     def get_total_milage(self, obj):
@@ -125,17 +125,17 @@ class ClassicSummery(serializers.ModelSerializer):
 
     def get_total_letter(self, obj):
         totalpieces = Delivery.objects.filter(mode__exact="bike").aggregate(
-            total_letter=Sum('letteritems'))
+            total_letter=Sum('letters_number'))
         return totalpieces["total_letter"]
 
     def get_total_ship_weight(self, obj):
         totalpieces = Delivery.objects.filter(mode__exact="bike").aggregate(
-            total_ship_weight=Sum('shipweight'))
+            total_ship_weight=Round(Sum('packaged_weight')))
         return totalpieces["total_ship_weight"]
 
     def get_total_pack(self, obj):
         totalpieces = Delivery.objects.filter(
-            mode__exact="bike").aggregate(total_pack=Sum('package'))
+            mode__exact="bike").aggregate(total_pack=Sum('packages_number'))
         return totalpieces["total_pack"]
 
     def get_total_milage(self, obj):
